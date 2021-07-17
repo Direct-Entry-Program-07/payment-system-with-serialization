@@ -26,6 +26,7 @@ import javafx.stage.StageStyle;
 import model.Student;
 import model.StudentTM;
 import service.StudentService;
+import service.exception.FailedOperationException;
 import util.AppBarIcon;
 import util.MaterialUI;
 
@@ -152,7 +153,7 @@ public class ManageStudentsFormController {
                 studentService.deleteStudent(tm.getNic());
                 tblStudents.getItems().remove(tm);
             }
-        } catch (RuntimeException e) {
+        } catch (RuntimeException | FailedOperationException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to delete the item", ButtonType.OK).show();
         }
     }

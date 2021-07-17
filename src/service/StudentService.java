@@ -18,7 +18,7 @@ import java.util.List;
 public class StudentService {
 
     private static final File studentFile = new File("students.dep7");
-    private static final List<Student> studentDB = new ArrayList<>();
+    private static List<Student> studentDB = new ArrayList<>();
 
     static {
         //Add dummy data to student table
@@ -30,6 +30,8 @@ public class StudentService {
         studentDB.add(s2);
         studentDB.add(s3);
         studentDB.add(s4);
+
+        readDataFromFile();
     }
 
     public StudentService() {
@@ -61,15 +63,28 @@ public class StudentService {
         }
     }
 
-    public void updateStudent(Student student){
+    public void updateStudent(Student student) throws FailedOperationException {
         Student s = findStudent(student.getNic());
         int index = studentDB.indexOf(s);
-        studentDB.set(index, student);
+
+        try {
+            studentDB.set(index, student);
+            writeDataToFile();
+        }catch (FailedOperationException e){
+            studentDB.set(index, s);
+            throw e;
+        }
     }
 
-    public void deleteStudent(String nic){
+    public void deleteStudent(String nic) throws FailedOperationException {
         Student student = findStudent(nic);
-        studentDB.remove(student);
+        try{
+            studentDB.remove(student);
+            writeDataToFile();
+        }catch (FailedOperationException e){
+            studentDB.add(student);
+            throw e;
+        }
 
     }
 
@@ -102,6 +117,26 @@ public class StudentService {
         }
         return result;
     }
+
+
+    private static void readDataFromFile(){
+        if (!studentFile.exists()) return;
+
+        try(FileInputStream fos = new FileInputStream(studentFile);
+            ObjectInputStream oos = new ObjectInputStream(fos)){
+
+            studentDB = (ArrayList<Student>) oos.readObject();
+
+        } catch (IOException | ClassNotFoundException e) {
+            if (e instanceof EOFException){
+                studentFile.delete();
+            }else {
+
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     private boolean exitsStudent(String nic){
         for (Student student : studentDB) {

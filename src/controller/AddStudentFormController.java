@@ -50,6 +50,19 @@ public class AddStudentFormController {
     ObservableList<String> cmbBatchOptions = FXCollections.observableArrayList();
 
     public void initialize() {
+        cmbCourseOptions.add("DEP");
+        cmbCourseOptions.add("GDSE");
+        cmbCourseOptions.add("CMJD");
+        cmbCourseOptions.add("ABSD");
+        cmbCourseOptions.add("RWAD");
+
+        cmbBatchOptions.add("1");
+        cmbBatchOptions.add("2");
+        cmbBatchOptions.add("3");
+        cmbBatchOptions.add("4");
+
+        cmbBatchID.setItems(cmbBatchOptions);
+        cmbCourseID.setItems(cmbCourseOptions);
 
         Platform.runLater(() -> {
 
