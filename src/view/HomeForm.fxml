@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<!--
+  ~ Copyright (c) 2021  Dinusha Jayawardena. All rights reserved.
+  ~  Licensed under the MIT License. See License.txt in the project root for license information.
+  -->
+
+<AnchorPane prefHeight="820.0" prefWidth="1440.0" style="-fx-background-color: white;" stylesheets="@css/DashboardFormStyles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeFormController">
+   <children>
+      <TableView fx:id="tblDashboard" layoutX="25.0" layoutY="253.0" prefHeight="523.0" prefWidth="1390.0" AnchorPane.bottomAnchor="115.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+        <columns>
+          <TableColumn minWidth="0.0" prefWidth="341.0" text="CourseID" />
+          <TableColumn minWidth="0.0" prefWidth="318.0" text="New Registrations" />
+            <TableColumn prefWidth="341.0" text="Number of Payments" />
+            <TableColumn prefWidth="388.0" text="Total Income" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label layoutX="25.0" layoutY="14.0" style="-fx-text-fill: #03A9F4;" text="Date:">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label layoutX="1241.0" layoutY="14.0" prefHeight="21.0" prefWidth="61.0" style="-fx-text-fill: #03A9F4;" text="Time:">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label fx:id="lblDate" layoutX="93.0" layoutY="14.0" style="-fx-text-fill: #03A9F4;" text="2000-01-01">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label fx:id="lblTime" alignment="CENTER_RIGHT" layoutX="1302.0" layoutY="14.0" prefHeight="16.0" prefWidth="109.0" style="-fx-text-fill: #03A9F4;" text="00:00:00" textAlignment="JUSTIFY">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <HBox layoutX="25.0" layoutY="721.0" prefHeight="77.0" prefWidth="1390.0" spacing="60.0">
+         <children>
+            <JFXButton fx:id="btnManageStudents" onAction="#btnManageStudents_OnAction" onKeyReleased="#btnManageStudents_OnKeyReleased" prefHeight="64.0" prefWidth="230.0" style="-fx-background-color: #B3E5FC;" text="Manage Students">
+               <HBox.margin>
+                  <Insets top="7.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnManageCourses" onAction="#btnManageCourses_OnAction" onKeyReleased="#btnManageCourses_OnKeyReleased" prefHeight="64.0" prefWidth="230.0" style="-fx-background-color: #B3E5FC;" text="Manage Courses">
+               <HBox.margin>
+                  <Insets top="7.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnManagePayments" onAction="#btnManagePayments_OnAction" onKeyReleased="#btnManagePayments_OnKyeReleased" prefHeight="64.0" prefWidth="230.0" style="-fx-background-color: #B3E5FC;" text="Manage Payments">
+               <HBox.margin>
+                  <Insets top="7.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnManageUsers" onAction="#btnManageUsers_OnAction" onKeyReleased="#btnManageUsers_OnKeyReleased" prefHeight="64.0" prefWidth="230.0" style="-fx-background-color: #B3E5FC;" text="Manage Users">
+               <HBox.margin>
+                  <Insets top="7.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnViewPayments" onAction="#btnViewPayments_OnAction" onKeyReleased="#btnViewPayments_OnKeyReleased" prefHeight="64.0" prefWidth="230.0" style="-fx-background-color: #B3E5FC;" text="View Payments">
+               <HBox.margin>
+                  <Insets top="7.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </HBox>
+      <HBox layoutX="25.0" layoutY="102.0" prefHeight="70.0" prefWidth="1390.0" spacing="100.0">
+         <children>
+            <AnchorPane prefHeight="70.0" prefWidth="500.0">
+               <children>
+                  <JFXDatePicker fx:id="pckrDate" accessibleText="Search using a Date" defaultColor="#81d4fa" prefHeight="48.0" prefWidth="502.0" promptText="Select a Date to search" AnchorPane.topAnchor="10.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor></JFXDatePicker>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </AnchorPane>
+            <AnchorPane prefHeight="70.0" prefWidth="788.0">
+               <children>
+                  <TextField fx:id="txtQuery" accessibleText="Search using CourseID" prefHeight="48.0" prefWidth="716.0" promptText="Eg: DEP" style="-fx-background-color: white;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="15.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <Label layoutX="604.0" layoutY="25.0" text="DASHBOARD">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

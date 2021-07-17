@@ -1,0 +1,51 @@
+/*
+ * Copyright (c) 2021  Dinusha Jayawardena. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+#tblStudents .column-header{
+    -fx-background-color: #81D4FA;
+    -fx-size: 60px;
+    -fx-font-family: "Ubuntu";
+    -fx-font-size: 18px;
+}
+
+#tblStudents .table-row-cell:empty{
+    -fx-background-color: white;
+}
+
+#tblStudents{
+    -fx-border-color: rgba(0,0,0,0.2);
+    -fx-background-insets: 0px, 0px;
+    -fx-padding: 0;
+}
+
+#tblStudents .cell{
+    -fx-cell-size: 60px;
+    -fx-wrap-text: true;
+}
+
+#tblStudents .table-cell:empty{
+    -fx-border-color: transparent;
+}
+
+#tblStudents .table-row-cell:filled:hover{
+    -fx-background-color: rgba(129, 212, 250, 0.5);
+    -fx-background-insets: 0px 1px 0px 1px;
+    -fx-background-radius: 4px;
+}
+
+#tblStudents .table-row-cell:filled:selected{
+    -fx-background-color: rgba(201, 201, 201, 0.71);
+    -fx-background-insets: 0px 1px 0px 1px;
+    -fx-background-radius: 4px;
+}
+
+.button:hover{
+    -fx-text-fill: white;
+    -fx-background-color: #03A9F4 !important;
+}
+
+.action-icons:hover{
+    -fx-cursor: hand;
+}

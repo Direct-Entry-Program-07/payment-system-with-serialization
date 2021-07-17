@@ -1,0 +1,28 @@
+/*
+ * Copyright (c) 2021  Dinusha Jayawardena. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ */
+
+.menu:hover, .menu:focused{
+    -fx-border-color: #03A9F4;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+#app-bar{
+    -fx-background-radius: 5px 5px 0 0;
+}
+
+#title{
+    -fx-font-size: 20px;
+    -fx-font-weight: 500;
+    -fx-text-fill: white;
+    -fx-font-family: Ubuntu;
+}
+
+#pneUserProfile:hover{
+    -fx-border-color: white;
+    -fx-background-color: #03A9F4;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}

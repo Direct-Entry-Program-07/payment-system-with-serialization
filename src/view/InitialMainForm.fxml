@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<!--
+  ~ Copyright (c) 2021  Dinusha Jayawardena. All rights reserved.
+  ~  Licensed under the MIT License. See License.txt in the project root for license information.
+  -->
+
+<AnchorPane prefHeight="300.0" prefWidth="650.0" style="-fx-background-color: rgba(0,0,0,0);" stylesheets="@css/MainFormStyles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InitialMainFormController">
+    <children>
+        <AnchorPane id="app-bar" fx:id="pneAppBar" opacity="0.85" prefHeight="75.0" prefWidth="1440.0" style="-fx-background-color: #03A9F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <ImageView fx:id="imgClose" fitHeight="24.0" fitWidth="24.0" layoutX="1402.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="14.0">
+                    <image>
+                        <Image url="@assets/icons/close.png" />
+                    </image>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ImageView>
+                <ImageView fx:id="imgMinimize" fitHeight="24.0" fitWidth="24.0" layoutX="1372.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="44.0">
+                    <image>
+                        <Image url="@assets/icons/minimize.png" />
+                    </image>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ImageView>
+                <Label id="title" fx:id="lblTitle" alignment="CENTER" layoutX="58.0" layoutY="13.0" prefHeight="65.0" prefWidth="1296.0" text="Label" textAlignment="CENTER" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="5.0">
+                </Label>
+                <ImageView fx:id="imgNav" fitHeight="24.0" fitWidth="24.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0">
+                    <image>
+                        <Image url="@assets/icons/home.png" />
+                    </image>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ImageView>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="pneStage" layoutY="81.0" prefHeight="818.0" prefWidth="1438.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="81.0">
+            <effect>
+                <DropShadow spread="0.04" />
+            </effect></AnchorPane>
+    </children>
+</AnchorPane>
