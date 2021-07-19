@@ -5,15 +5,21 @@
 
 package model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class Course {
+public class Course implements Serializable {
     private String courseID;
     private String courseName;
     private Batch selectedBatch;
     private int noOfStudentsForTheBatch;
+    private HashMap<Batch, Batch> batches ;
     private LocalDate batchCommencingDate;
     private String note;
+    private List<Integer> allBatches = new ArrayList<>();
     private boolean isDuplicated = false;
 
     public Course() {
@@ -35,6 +41,11 @@ public class Course {
         this.setNote(note);
     }
 
+    public Course(String courseID, String courseName,HashMap<Batch, Batch> batches) {
+        this.courseID = courseID;
+        this.courseName = courseName;
+        this.setBatches(batches);
+    }
 
     public String getCourseID() {
         return courseID;
@@ -84,6 +95,26 @@ public class Course {
         this.note = note;
     }
 
+    public boolean isDuplicated() {
+        return true;
+    }
+
+    public void setDuplicated(boolean duplicated) {
+        isDuplicated = duplicated;
+    }
+
+    public List<Integer> getAllBatches() {
+        return allBatches;
+    }
+
+    public void setAllBatches(List<Integer> allBatches) {
+        this.allBatches = allBatches;
+    }
+
+    public void getBatchDetails(String courseId, int batchNumber){
+
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -93,14 +124,16 @@ public class Course {
                 ", noOfStudentsForTheBatch=" + noOfStudentsForTheBatch +
                 ", batchCommencingDate=" + batchCommencingDate +
                 ", note='" + note + '\'' +
+                ", allBatches=" + allBatches +
+                ", isDuplicated=" + isDuplicated +
                 '}';
     }
 
-    public boolean isDuplicated() {
-        return true;
+    public HashMap<Batch, Batch> getBatches() {
+        return batches;
     }
 
-    public void setDuplicated(boolean duplicated) {
-        isDuplicated = duplicated;
+    public void setBatches(HashMap<Batch, Batch> batches) {
+        this.batches = batches;
     }
 }

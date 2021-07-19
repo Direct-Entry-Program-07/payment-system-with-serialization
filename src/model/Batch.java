@@ -5,9 +5,10 @@
 
 package model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Batch {
+public class Batch implements Serializable {
     private String id;
     private int studentCount;
     private LocalDate commencingDate;
@@ -59,6 +60,11 @@ public class Batch {
 
     @Override
     public String toString() {
-        return id;
+        return "Batch{" +
+                "id='" + id + '\'' +
+                ", studentCount=" + studentCount +
+                ", commencingDate=" + commencingDate +
+                ", note='" + note + '\'' +
+                '}';
     }
 }
