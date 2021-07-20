@@ -17,7 +17,7 @@
   ~  Licensed under the MIT License. See License.txt in the project root for license information.
   -->
 
-<AnchorPane  fx:id="root" prefHeight="800.0" prefWidth="650.0" style="-fx-background-color: white;" stylesheets="@css/SecondaryFormsStyles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddPaymentFormController">
+<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="650.0" style="-fx-background-color: white;" stylesheets="@css/SecondaryFormsStyles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddPaymentFormController">
     <children>
         <AnchorPane layoutX="18.0" layoutY="17.0" prefHeight="678.0" prefWidth="614.0" style="-fx-border-color: #81D4FA; -fx-border-radius: 10;" />
         <VBox layoutX="24.0" layoutY="35.0" prefHeight="654.0" prefWidth="601.0" spacing="20.0">
@@ -52,7 +52,7 @@
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                  <ComboBox fx:id="cmbCourseName" prefHeight="32.0" prefWidth="375.0" promptText="Direct Entry Program" style="-fx-background-color: #B3E5FC;">
+                  <ComboBox fx:id="cmbCourseName" prefHeight="32.0" prefWidth="375.0" promptText="Select a course" style="-fx-background-color: #B3E5FC;">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -109,7 +109,7 @@
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                  <ComboBox fx:id="cmbPaymentReason" prefHeight="32.0" prefWidth="375.0" promptText="Installment" style="-fx-background-color: #B3E5FC;">
+                  <ComboBox fx:id="cmbPaymentReason" prefHeight="32.0" prefWidth="375.0" promptText="Select a reason" style="-fx-background-color: #B3E5FC;">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -146,7 +146,7 @@
                                 <Insets left="10.0" top="12.0" />
                             </HBox.margin>
                         </Label>
-                        <ComboBox fx:id="cmbPaymentMethod" prefHeight="32.0" prefWidth="375.0" promptText="Bank Deposit" style="-fx-background-color: #B3E5FC;">
+                        <ComboBox fx:id="cmbPaymentMethod" prefHeight="32.0" prefWidth="375.0" promptText="Select a payment method" style="-fx-background-color: #B3E5FC;">
                             <HBox.margin>
                                 <Insets top="6.0" />
                             </HBox.margin>
@@ -205,7 +205,7 @@
             </HBox>
             </children>
         </VBox>
-        <JFXButton fx:id="btnSave" layoutX="460.0" layoutY="722.0" onAction="#btnSave_OnAction" prefHeight="51.0" prefWidth="172.0" style="-fx-background-color: #B3E5FC;" text="Save">
+        <JFXButton fx:id="btnSave" layoutX="460.0" layoutY="722.0" onAction="#btnSave_OnAction" prefHeight="51.0" prefWidth="172.0" style="-fx-background-color: #B3E5FC;" text="Save Payment">
             <font>
                 <Font size="20.0" />
             </font>

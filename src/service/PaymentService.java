@@ -8,56 +8,98 @@ package service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Payment;
+import service.exception.DuplicateEntryException;
+import service.exception.FailedOperationException;
 
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentService {
 
-    private static final List<Payment> paymentDB = new ArrayList<>();
-    private static ObservableList<String> courseList = FXCollections.observableArrayList();
-
+    private static final File paymentsFile = new File("payments.dep7");
+    private static final ObservableList<String> courseList = FXCollections.observableArrayList();
+    private static List<Payment> paymentDB = new ArrayList<>();
 
     static {
-        courseList.add("DEP");
-       // courseList.add("GDSE");
-       // courseList.add("ABSD");
-       // courseList.add("ABSD");
 
-        //Add dummy data to payment table
-        Payment p1 = new Payment("R-0001","123456789v", "Amal Perera", "DEP", BigDecimal.valueOf(100000), BigDecimal.valueOf(30000), "1st Installement", BigDecimal.valueOf(20000), "Cash", BigDecimal.valueOf(10000), "Test");
-        Payment p2 = new Payment("R-0002","234567890v", "Kasun Sampath", "CMJD", BigDecimal.valueOf(200000), BigDecimal.valueOf(50000), "Registration", BigDecimal.valueOf(20000), "Back Deposit", BigDecimal.valueOf(30000), "Test");
-        paymentDB.add(p1);
-        paymentDB.add(p2);
+        readDataFromFile();
+        getLastRecieptNumber();
     }
 
-    public PaymentService(){
+    public PaymentService() {
 
     }
 
-    public void savePayment(Payment payment){
-        paymentDB.add(payment);
+    private static void writeDataToFile() throws FailedOperationException {
+        try (FileOutputStream fos = new FileOutputStream(paymentsFile);
+            ObjectOutputStream oos = new ObjectOutputStream(fos)){
+            oos.writeObject(paymentDB);
+
+        }catch (Throwable e){
+            e.printStackTrace();
+            throw new FailedOperationException();
+        }
     }
 
-    public void updatePayment(Payment payment){
+    private static void readDataFromFile() {
+        if (!paymentsFile.exists()) return;
+
+        try (FileInputStream fis = new FileInputStream(paymentsFile);
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+
+            paymentDB = (List<Payment>) ois.readObject();
+
+        } catch (IOException | ClassNotFoundException e) {
+            if (e instanceof EOFException) {
+                paymentsFile.delete();
+            } else {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void getLastRecieptNumber(){
+        String last = "";
+        for (Payment payment : paymentDB) {
+            last = payment.getReceiptNumber();
+        }
+        System.out.println(last);
+    }
+
+    public void savePayment(Payment payment) throws DuplicateEntryException, FailedOperationException {
+        if (existsPayment(payment.getReceiptNumber())){
+            throw new DuplicateEntryException();
+        }
+        try {
+            paymentDB.add(payment);
+            writeDataToFile();
+        } catch (FailedOperationException e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+    }
+
+    public void updatePayment(Payment payment) {
         Payment p = findPayment(payment.getReceiptNumber());
         int index = paymentDB.indexOf(p);
         paymentDB.set(index, payment);
     }
 
-    public void deletePayment(String receiptNo){
+    public void deletePayment(String receiptNo) {
         Payment payment = findPayment(receiptNo);
         paymentDB.remove(payment);
     }
 
-    public List<Payment> findAllPayments(){
+    public List<Payment> findAllPayments() {
         return paymentDB;
     }
 
-    public Payment findPayment(String receiptNo){
+    public Payment findPayment(String receiptNo) {
         for (Payment payment : paymentDB) {
-            if (payment.getReceiptNumber().equals(receiptNo)){
+            if (payment.getReceiptNumber().equals(receiptNo)) {
                 return payment;
 
             }
@@ -65,17 +107,26 @@ public class PaymentService {
         return null;
     }
 
-    public List<Payment> findPayments(String query){
+    public List<Payment> findPayments(String query) {
         List<Payment> result = new ArrayList<>();
 
         for (Payment payment : paymentDB) {
 
             if (payment.getReceiptNumber().contains(query) ||
-                payment.getCourseName().contains(query) ||
-                payment.getNic().contains(query)){
+                    payment.getCourseName().contains(query) ||
+                    payment.getNic().contains(query)) {
                 result.add(payment);
             }
         }
         return result;
+    }
+
+    public boolean existsPayment(String reciept){
+        for (Payment payment : paymentDB) {
+            if (payment.getReceiptNumber().equals(reciept)){
+                return true;
+            }
+        }
+        return false;
     }
 }

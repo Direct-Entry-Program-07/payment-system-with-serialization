@@ -7,6 +7,8 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,11 +19,15 @@ import javafx.stage.Window;
 import model.Payment;
 import model.PaymentTM;
 import service.PaymentService;
+import service.StudentService;
+import service.exception.DuplicateEntryException;
+import service.exception.FailedOperationException;
 
 import java.math.BigDecimal;
 import java.util.regex.Pattern;
 
 public class AddPaymentFormController {
+    private int receiptNumber = 0;
     public JFXButton btnSave;
     public JFXButton btnCancel;
     public TextField txtStudentNIC;
@@ -35,19 +41,31 @@ public class AddPaymentFormController {
     public TextField txtBalance;
     public TextArea txtNote;
     public AnchorPane root;
-
     public PaymentService paymentService = new PaymentService();
     ObservableList<String> courseNames = FXCollections.observableArrayList();
     ObservableList<String> paymentReasons = FXCollections.observableArrayList();
     ObservableList<String> paymentMethod = FXCollections.observableArrayList();
-
-
+    private String formattedRec;
 
     public void initialize() {
+
+        formattedRec = String.format("R-" + "%04d", receiptNumber);
 
         courseNames.add("DEP");
         courseNames.add("ABSD");
         courseNames.add("GDSE");
+
+        paymentReasons.add("Registration Fee");
+        paymentReasons.add("Installments");
+        paymentReasons.add("Additional fee");
+        paymentReasons.add("Exam Fee");
+
+        paymentMethod.add("Cash");
+        paymentMethod.add("Bank Payment");
+
+        cmbCourseName.setItems(courseNames);
+        cmbPaymentReason.setItems(paymentReasons);
+        cmbPaymentMethod.setItems(paymentMethod);
 
         Platform.runLater(() -> {
 
@@ -69,6 +87,23 @@ public class AddPaymentFormController {
                 btnSave.setText("Update Payment");
             }
         });
+
+        txtStudentNIC.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    String text = txtStudentNIC.getText();
+                    boolean b = new StudentService().exitsStudent(text);
+
+                    if (b) {
+                        txtStudentNIC.setStyle("-fx-text-fill: Green; -fx-border-color: Green;");
+
+                    } else {
+                        txtStudentNIC.setStyle("-fx-text-fill: Red; -fx-border-color: Red; ");
+                    }
+                }
+            }
+        });
     }
 
     public void btnSave_OnAction(ActionEvent actionEvent) {
@@ -76,11 +111,15 @@ public class AddPaymentFormController {
             if (!isValidated()) {
                 return;
             }
+            String fullName = new StudentService().findStudent(txtStudentNIC.getText()).getFullName();
+            receiptNumber++;
+            formattedRec = String.format("R-" + "%04d", receiptNumber);
+
             Payment payment = new Payment(
-                    txtRefNumber.getText(),
+                    formattedRec,
                     txtStudentNIC.getText(),
-                    "Student Name",
-                    "DEP",
+                    fullName,
+                    (String) cmbCourseName.getValue(),
                     new BigDecimal(txtTotalFee.getText()),
                     new BigDecimal(txtRemaining.getText()),
                     (String) cmbPaymentReason.getValue(),
@@ -105,6 +144,10 @@ public class AddPaymentFormController {
         } catch (RuntimeException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to save the payment", ButtonType.OK).show();
+        } catch (FailedOperationException e) {
+            e.printStackTrace();
+        } catch (DuplicateEntryException e) {
+            e.printStackTrace();
         }
     }
 
@@ -133,7 +176,11 @@ public class AddPaymentFormController {
             new Alert(Alert.AlertType.ERROR, "Invalid NIC").show();
             txtStudentNIC.requestFocus();
             return false;
-        } else if (courseName.equals("")) {
+        }else if(!new StudentService().exitsStudent(txtStudentNIC.getText())){
+            new Alert(Alert.AlertType.ERROR, "Can't find a student matches to the given NIC").show();
+            txtStudentNIC.requestFocus();
+            return false;
+        }else if (courseName.equals("")) {
             new Alert(Alert.AlertType.ERROR, "Please select a course Name").show();
             cmbCourseName.requestFocus();
             return false;
@@ -157,13 +204,13 @@ public class AddPaymentFormController {
             new Alert(Alert.AlertType.ERROR, "Please select a payment method").show();
             cmbPaymentReason.requestFocus();
             return false;
-        }else if ((paymentMethod.equals("Bank Deposit")) && refNumber.equals("")){
+        } else if ((paymentMethod.equals("Bank Deposit")) && refNumber.equals("")) {
             new Alert(Alert.AlertType.ERROR, "Please Add the Reference Number of the Slip").show();
             cmbPaymentReason.requestFocus();
             return false;
         }
 
-        return false;
+        return true;
     }
 
     public void btnCancel_OnAction(ActionEvent actionEvent) {

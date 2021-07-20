@@ -7,9 +7,10 @@ package model;
 
 import javafx.collections.ObservableList;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Payment {
+public class Payment implements Serializable {
     private String receiptNumber;
     private String nic;
     private String courseName;

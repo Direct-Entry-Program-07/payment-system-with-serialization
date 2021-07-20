@@ -138,7 +138,7 @@ public class StudentService {
     }
 
 
-    private boolean exitsStudent(String nic){
+    public boolean exitsStudent(String nic){
         for (Student student : studentDB) {
 
             if (student.getNic().equals(nic)) {
